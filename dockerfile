@@ -1,8 +1,11 @@
 # Use the base Grafana image
 FROM grafana/grafana:latest
 
-# Install Node.js and npm
-RUN apt-get update && apt-get install -y nodejs npm
+# Switch to the root user to install packages
+USER root
+
+# Install Node.js and npm using apk (the package manager for Alpine Linux)
+RUN apk add --no-cache nodejs npm
 
 # Create a directory for the plugin
 RUN mkdir -p /var/lib/grafana/plugins/max-firstdecent-panel
@@ -15,6 +18,9 @@ WORKDIR /var/lib/grafana/plugins/max-firstdecent-panel
 
 # Install plugin dependencies
 RUN npm install
+
+# Switch back to the grafana user
+USER grafana
 
 # Expose Grafana's default port
 EXPOSE 3000
