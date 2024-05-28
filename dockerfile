@@ -1,11 +1,8 @@
 # Use the base Grafana image
 FROM grafana/grafana:latest
 
-# Switch to root user to install packages
-USER root
-
-# Install Node.js and npm using apk (Alpine package manager)
-RUN apk add --no-cache nodejs npm
+# Install Node.js and npm
+RUN apt-get update && apt-get install -y nodejs npm
 
 # Create a directory for the plugin
 RUN mkdir -p /var/lib/grafana/plugins/max-firstdecent-panel
@@ -21,9 +18,6 @@ RUN npm install
 
 # Expose Grafana's default port
 EXPOSE 3000
-
-# Switch back to Grafana user before running Grafana
-USER grafana
 
 # Start Grafana
 CMD ["/run.sh"]
