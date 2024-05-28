@@ -1,0 +1,7 @@
+apiVersion: 1
+
+providers:
+  - name: 'First decent panel'
+    type: file
+    options:
+      path: /etc/grafana/provisioning/dashboards
